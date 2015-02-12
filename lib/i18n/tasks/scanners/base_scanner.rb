@@ -110,10 +110,13 @@ module I18n::Tasks::Scanners
       if position
         line_begin = text.rindex(/^/, src_pos - 1)
         line_end   = text.index(/.(?=\n|$)/, src_pos)
+        line = text[line_begin..line_end]
+        default = line[line.index(/(default: "|default: ')/)+10..line.rindex(/\)/)-2] rescue nil
         data.merge! pos:      src_pos,
                     line_num: text[0..src_pos].count("\n") + 1,
                     line_pos: src_pos - line_begin + 1,
-                    line:     text[line_begin..line_end]
+                    line:     line,
+                    default:  default
       end
       data
     end

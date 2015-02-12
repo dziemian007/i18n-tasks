@@ -16,6 +16,10 @@ module I18n::Tasks::Data::Tree
       self.children = (opts[:children] if opts[:children])
     end
 
+    def default
+      @data[:source_occurrences].first[:default] rescue nil
+    end
+
     def attributes
       {key: @key, value: @value, data: @data.try(:clone), parent: @parent, children: @children}
     end
